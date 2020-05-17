@@ -2,6 +2,10 @@ const express = require('express');
 const Restaurant = require('../models/Restaurant');
 
 const router = express.Router();
+//Get
+router.get('/', (req, res) => {
+    Restaurant.find({}).then(restaurant => res.json(restaurant))
+})
 
 // GET /:city
 router.get('/:city', (req, res) => { 
