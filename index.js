@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/restaurants', restaurantController);
-app.use('/restaurants/post', postController)
+app.use('/restaurant/post', postController)
 
 
 app.set('port', process.env.PORT || 4000);
