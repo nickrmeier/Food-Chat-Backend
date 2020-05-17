@@ -6,6 +6,42 @@ const supertest = require('supertest');
 
 const api = supertest('http://localhost:4000');
 
+describe('GET/restaurant/post', (done) => {
+	it('should return a 200 response', () => {
+		api
+			.get('/restaurant/post')
+			.set('Accept', 'application/json')
+			.expect(200, done);
+	});
+	it('should return an array', (done) => {
+		api
+			.get('/restaurant/post')
+			.set('Accept', 'application/json')
+			.end((error, response) => {
+				expect(response.body).to.be.an('array');
+				done();
+			});
+	});
+});
+
+describe('GET/restaurant/post/:id', () => {
+	it('should return a restaurants with the right fields', (done) => {
+		api
+			.get('/restaurant/post/5ec0955de81caa74ba3479e4')
+			.set('Accept', 'application/json')
+			.end((error, response) => {
+				expect(response.body).to.include.all.keys(
+					'_id',
+					'title',
+					'summary',
+					'revisit'
+				);
+				done();
+			});
+	});
+});
+
+
 describe('POST /restaurant/post', () => {
 	const newPost = {
 		title: 'chicken',

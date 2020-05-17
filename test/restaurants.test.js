@@ -27,7 +27,7 @@ describe('GET/restaurants/:city', (done) => {
 describe('GET/restaurants/:city/:id', () => {
 	it('should return a restaurants with the right fields', (done) => {
 		api
-			.get('/restaurants/New York/5ec098c707f8bb77ce4cc61f')
+			.get('/restaurants/New York/5ec0aca827c7e682c7016ce9')
 			.set('Accept', 'application/json')
 			.end((error, response) => {
 				expect(response.body).to.include.all.keys(
