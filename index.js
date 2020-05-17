@@ -16,6 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/restaurants', restaurantController);
 app.use('/restaurants/post', postController)
+app.use('/', (req, res) => {
+	res.redirect('/restaurants');
+});
 
 
 app.set('port', process.env.PORT || 4000);
