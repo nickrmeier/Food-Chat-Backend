@@ -27,7 +27,7 @@ describe('GET/restaurant/post', (done) => {
 describe('GET/restaurant/post/:id', () => {
 	it('should return a restaurants with the right fields', (done) => {
 		api
-			.get('/restaurant/post/5ec0955de81caa74ba3479e4')
+			.get('/restaurant/post/5ec09ea98bbc6e7ae0ac331b')
 			.set('Accept', 'application/json')
 			.end((error, response) => {
 				expect(response.body).to.include.all.keys(
@@ -113,7 +113,9 @@ describe('DELETE /restaurant/post/:id', () => {
 			.set('Accept', 'application/json')
 			.end((error, response) => {
 				const post = response.body;
+				console.log(response.body)
 				postToDelete = post[post.length - 1]._id;
+				console.log(postToDelete)
 				done();
 			});
 	});
@@ -128,7 +130,8 @@ describe('DELETE /restaurant/post/:id', () => {
 			.get(`/restaurant/post/${postToDelete}`)
 			.set('Accept', 'application/json')
 			.end((error, response) => {
-				expect(response.body).to.equal(null);
+				console.log(response.body)
+				expect(response.body.title).to.equal(undefined);
 				done();
 			});
 	});
