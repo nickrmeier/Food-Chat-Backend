@@ -4,7 +4,7 @@ const postSchema = new mongoose.Schema(
     {
         title: String,
         summary: String,
-        revisit: Boolean,
+        revisit: String,
         restID: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Restaurant'
