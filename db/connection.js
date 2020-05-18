@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 
+mongoose.Promise = Promise;
+
 const mongoURI =
     process.env.NODE_ENV === 'production'
         ? process.env.MONGODB_URI
         : 'mongodb://localhost/foodviewer';
 
 mongoose
-    .connect('mongodb://localhost/foodviewer', {
+    .connect(mongoURI, {
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true,
