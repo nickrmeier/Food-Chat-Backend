@@ -1,5 +1,6 @@
 const express = require('express');
 const Post = require('../models/Post');
+const Restaurant = require('../models/Restaurant');
 const {
 	handleValidateId,
 	handleRecordExists,
@@ -24,9 +25,19 @@ router.get('/:id', handleValidateId, (req, res, next) => {
 });
 
 // POST
-router.post('/', (req, res, next) => {
+router.post('/:restaurant', (req, res, next) => {
 	Post.create(req.body)
-		.then((post) => res.json(post))
+		.then((post) => {
+			Restaurant.findOne({ name: req.params.restaurant }).then(
+				async (restaurant) => {
+					restaurant.comments.push(post);
+					await restaurant.save();
+					console.log(restaurant);
+					console.log('all done 🌟');
+					process.exit();
+				}
+			);
+		})
 		.catch(next);
 });
 
