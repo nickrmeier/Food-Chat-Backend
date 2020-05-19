@@ -5,10 +5,10 @@ const postSchema = new mongoose.Schema(
         title: String,
         summary: String,
         revisit: String,
-        restID: {
+        restID: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Restaurant'
-        }
+        }]
     }
 );
 

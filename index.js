@@ -18,8 +18,8 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/restaurants', restaurantController);
-app.use('/restaurant/post', postController)
+app.use('/api/restaurants', restaurantController);
+app.use('/api/post', postController)
 
 app.use(handleValidationErrors);
 // The catch all for handling errors
