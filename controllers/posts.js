@@ -36,11 +36,14 @@ router.post('/:restaurantId', (req, res, next) => {
 });
 
 // Put
-router.put('/:id', handleValidateId, (req, res, next) => {
+router.put('/:id', (req, res, next) => {
 	Post.findOneAndUpdate({ _id: req.params.id }, req.body, {
 		new: true,
 	})
-		.then((post) => res.json(post))
+		.then((post) => {
+			console.log(post)
+			res.json(post)
+		})
 		.catch(next);
 });
 
