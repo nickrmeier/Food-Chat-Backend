@@ -6,16 +6,13 @@ const supertest = require('supertest');
 
 const api = supertest('http://localhost:4000');
 
-describe('GET/restaurant/post', (done) => {
+describe('GET/api/post', (done) => {
 	it('should return a 200 response', () => {
-		api
-			.get('/restaurant/post')
-			.set('Accept', 'application/json')
-			.expect(200, done);
+		api.get('/api/post').set('Accept', 'application/json').expect(200, done);
 	});
 	it('should return an array', (done) => {
 		api
-			.get('/restaurant/post')
+			.get('/api/post')
 			.set('Accept', 'application/json')
 			.end((error, response) => {
 				expect(response.body).to.be.an('array');
@@ -24,25 +21,26 @@ describe('GET/restaurant/post', (done) => {
 	});
 });
 
-describe('GET/restaurant/post/:id', () => {
+describe('GET/api/post/:restaurantID', () => {
 	it('should return a restaurants with the right fields', (done) => {
 		api
-			.get('/restaurant/post/5ec09ea98bbc6e7ae0ac331b')
+			.get('/api/post/5ec2d1d2f9f2e844c801553a')
 			.set('Accept', 'application/json')
 			.end((error, response) => {
-				expect(response.body).to.include.all.keys(
+				console.log(response.body[0]);
+				expect(response.body[0]).to.include.all.keys(
 					'_id',
 					'title',
 					'summary',
-					'revisit'
+					'revisit',
+					'restID'
 				);
 				done();
 			});
 	});
 });
 
-
-describe('POST /restaurant/post', () => {
+describe('POST /api/post/:restaurantId', () => {
 	const newPost = {
 		title: 'chicken',
 		summary: 'chicken is good',
@@ -52,7 +50,7 @@ describe('POST /restaurant/post', () => {
 	before((done) => {
 		console.log(newPost);
 		api
-			.post('/restaurant/post')
+			.post('/api/post')
 			.set('Accept', 'application/json')
 			.send(newPost)
 			.end(done);
@@ -60,7 +58,7 @@ describe('POST /restaurant/post', () => {
 
 	it('should include the new post in the collection', (done) => {
 		api
-			.get('/restaurant/post')
+			.get('/api/post')
 			.set('Accept', 'application/json')
 			.end((error, response) => {
 				console.log(response.body);
@@ -71,11 +69,16 @@ describe('POST /restaurant/post', () => {
 	});
 });
 
-describe('PUT /restaurant/post/:id', () => {
+describe('PUT /api/post/:id', () => {
 	let postToUpdate;
+	const updatedPost = {
+		title: 'pasta',
+		summary: 'pasta is good',
+		revisit: 'Yes',
+	};
 	before((done) => {
 		api
-			.get('/restaurant/post')
+			.get('/api/post')
 			.set('Accept', 'application/json')
 			.end((error, response) => {
 				console.log(response.body[0]);
@@ -85,52 +88,48 @@ describe('PUT /restaurant/post/:id', () => {
 	});
 	before((done) => {
 		api
-			.put(`/restaurant/post/${postToUpdate._id}`)
+			.put(`/api/post/${postToUpdate._id}`)
 			.set('Accept', 'application/json')
-			.send({
-				title: 'ice ',
-				summary: 'ice cream is good',
-				revisit: true,
-			})
+			.send(updatedPost)
 			.end(done);
 	});
 	it('can update a post by id', (done) => {
 		api
-			.get(`/restaurant/post/${postToUpdate._id}`)
+			.get('/api/post')
 			.set('Accept', 'application/json')
-			.end((error, response) => {
-				expect(response.body).to.have.property('revisit', true);
+			.end((req, response) => {
+				expect(response.body[0]).to.have.property('revisit', 'Yes');
 				done();
 			});
 	});
 });
 
-describe('DELETE /restaurant/post/:id', () => {
+describe('DELETE /api/post/:id', () => {
 	let postToDelete;
 	before((done) => {
 		api
-			.get('/restaurant/post')
+			.get('/api/post')
 			.set('Accept', 'application/json')
 			.end((error, response) => {
 				const post = response.body;
-				console.log(response.body)
+				console.log(response.body);
 				postToDelete = post[post.length - 1]._id;
-				console.log(postToDelete)
+				console.log(postToDelete);
 				done();
 			});
 	});
 	before((done) => {
 		api
-			.delete(`/restaurant/post/${postToDelete}`)
+			.delete(`/api/post/${postToDelete}`)
 			.set('Accept', 'application/json')
 			.end(done);
 	});
 	it('deletes a restaurant by id', (done) => {
 		api
-			.get(`/restaurant/post/${postToDelete}`)
+			.get(`/api/post/${postToDelete}`)
 			.set('Accept', 'application/json')
 			.end((error, response) => {
-				console.log(response.body)
+				console.log(response.body);
 				expect(response.body.title).to.equal(undefined);
 				done();
 			});

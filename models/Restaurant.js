@@ -7,7 +7,7 @@ const restaurantSchema = new mongoose.Schema(
         city: String,
         image: String,
         address: String,
-        comments: [Post.schema]
+       
     },
 );
 
