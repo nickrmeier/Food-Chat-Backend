@@ -1,5 +1,9 @@
 ## Food Chat Backend
 
+[Click here to get the restaurants API](https://afternoon-woodland-50465.herokuapp.com/api/restaurants)
+
+[Click here to get the posts API](https://afternoon-woodland-50465.herokuapp.com/api/post)
+
 ### Description:
 FoodChat is an application that allows users to create posts on the best or worst dish at the top 10 restaurants in Los Angeles, New York, and Austin. Users are able to post a dish, their  description of that dish, and whether or not they would revisit the restaurant. FoodChat also allows users to delete and edit posts.
 
@@ -84,6 +88,3 @@ address: "625 Lincoln Blvd, Los Angeles, CA 90291",
 __v: 0
 }
 ```
-[Please click here to get the restaurants API!](https://afternoon-woodland-50465.herokuapp.com/api/restaurants)
-
-[Please click here to get the posts API!](https://afternoon-woodland-50465.herokuapp.com/api/post)
